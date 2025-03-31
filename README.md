@@ -26,5 +26,5 @@ pip install -r requirements.txt
 
 Run the application (either from terminal or preffered ide) - main file is "main.py"
 ```bash
-python main.py
+streamlit run main.py
 ```
