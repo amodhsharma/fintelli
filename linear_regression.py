@@ -1,3 +1,6 @@
+#dependencies
+#explanation of model 
+
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
@@ -106,6 +109,14 @@ def forecast_stock_prices_linear(data, period, start_date, end_date):
     ))
 
     st.subheader("Linear Regression Forecast")
+    st.markdown("""
+<div style="font-size:14px;">
+    This model predicts future stock prices by fitting a straight line to historical data.  
+    It minimizes the difference between actual and predicted values.  
+    A lower <u>MSE</u>/<u>RMSE</u>/<u>MAE</u> indicates better accuracy, while the <u>R² Score</u> shows how well the model explains price variations.  
+    Use this insight to gauge market trends and potential price movements.  
+</div>
+""", unsafe_allow_html=True)
     fig.update_layout(
         xaxis_title="Date",
         yaxis_title="Stock Price",

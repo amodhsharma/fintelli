@@ -3,7 +3,8 @@ import streamlit as st
 import plotly.graph_objects as go
 
 def plot_volatility(data, ticker):
-    st.subheader(f'Stock Volatility for {ticker}')
+    st.title("Stock Price Volatility")
+    st.write("The degree of variation in a stock's price over time, often measured by standard deviation or the average absolute change in price. 30-day volatility tracks price fluctuations over the past month, while 90-day volatility captures price movements over a three-month period, helping you assess short-term versus medium-term risk.")
     
     # Ensure 'Date' is in datetime format
     data['Date'] = pd.to_datetime(data['Date'])
@@ -14,37 +15,30 @@ def plot_volatility(data, ticker):
     data['Volatility_90'] = data['Close'].rolling(window=90).std()
     
     # Create figure
-    fig = go.Figure()
-    
-    # 30-Day Rolling Volatility
-    fig.add_trace(go.Scatter(
-        x=data.index, 
-        y=data['Volatility_30'], 
-        mode='lines', 
-        name='30-Day Rolling Volatility',
-        line=dict(color='blue')
-    ))
-    
-    # 90-Day Rolling Volatility
-    fig.add_trace(go.Scatter(
-        x=data.index, 
-        y=data['Volatility_90'], 
-        mode='lines', 
-        name='90-Day Rolling Volatility',
-        line=dict(color='red')
-    ))
+    fig = go.Figure(data=[
+        go.Scatter(x=data.index, y=data['Volatility_30'], mode='lines', name='30-Day Rolling Volatility',line=dict(color='blue')),
+        go.Scatter(x=data.index, y=data['Volatility_90'], mode='lines', name='90-Day Rolling Volatility',line=dict(color='red'))
+    ])
     
     # Configure layout
     fig.update_layout(
-        #title=f"Stock Price Volatility for {ticker}",
+        autosize=True,
+        title="Stock Price Volatility",
+        legend_title='Reference',
         xaxis=dict(
             title="Date",
             rangeslider=dict(visible=True),  # Enable range slider
-            type="date"
+            type="date",
+            showline=True,
+            linecolor="white",  # Black x-axis line
+            linewidth=1  # Make it bold
         ),
-        yaxis=dict(title="Volatility"),
-        showlegend=True
+        yaxis=dict(title="Volatility",
+            showline=True,  # Show y-axis line
+            linecolor="white",  # Black y-axis line
+            linewidth=1  # Make it bold)
+        )
     )
     
     # Show the interactive plot
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig)
