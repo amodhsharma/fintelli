@@ -6,4 +6,5 @@ __pycache__/
 *.db
 myenv/
 ARCHIVE/
-
+screenshots/
+requirements.txt
