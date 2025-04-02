@@ -35,7 +35,10 @@ def create_train_test_set(lr_data):
 # Cache the model training and prediction to avoid retraining the model every time
 @st.cache_resource
 def perform_linear_regression(lr_data):
-    st.title("Linear Regression Model")
+    #st.title("Linear Regression Model")
+
+    st.markdown("<h1 style='color: cyan;'>Traditional Regression & Statistical Models</h1>", unsafe_allow_html=True),
+    st.markdown("<h3 style='color: cyan;'>M1: Linear Regression Model</h3>", unsafe_allow_html=True),
     st.write("Linear Regression is a fundamental supervised machine learning algorithm used for modeling the relationship between a dependent variable (target) and one or more independent variables (predictors).")
     st.latex(r"y = mx + c")
     st.write("Y → Dependent variable (Target) → The value we want to predict (e.g., future stock price).")
@@ -72,10 +75,11 @@ def perform_linear_regression(lr_data):
     fig.add_trace(go.Scatter(x=X_test.index, y=y_test, mode='lines', name='Actual', line=dict(color='blue')))
     fig.add_trace(go.Scatter(x=X_test.index, y=y_pred, mode='lines', name='Predicted', line=dict(color='orange')))
     
-    fig.update_layout(title='Linear Regression - Actual vs Predicted',
-                      xaxis=dict(title="Date", rangeslider=dict(visible=True)),
-                      yaxis_title=target_column,
-                      legend_title='Reference')
+    st.markdown("`METRIC VALIDATION PLOT`", unsafe_allow_html=True)
+    fig.update_layout(title='Linear Regression',
+                    legend_title='Reference',
+                    xaxis=dict(title="Date",rangeslider=dict(visible=True), showline=True, linecolor="white", linewidth=1),
+                    yaxis=dict(title=target_column, showline=True, linecolor="white", linewidth=1))
     
     # Display plot in Streamlit
     st.plotly_chart(fig)
@@ -83,6 +87,7 @@ def perform_linear_regression(lr_data):
     # Display metrics in Streamlit
     blue_text = "color: #3498DB;"  # Hex code for light blue
 
+    st.markdown("`ERROR EVALUATION METRICS`", unsafe_allow_html=True)
     st.subheader("Evaluation Metrics")
     #st.markdown(f'<p style="{blue_text}"><b>MSE:</b> {metrics["MSE"]:.4f}</p>', unsafe_allow_html=True)
     st.markdown(f"RMSE: The model's predicted prices deviate by around Rs.<span style='{blue_text}'>{metrics['RMSE']:.2f}</span> on average.", unsafe_allow_html=True)

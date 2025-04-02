@@ -28,7 +28,9 @@ def evaluate_metrics(y_true, y_pred):
 # Cache the model training and prediction to avoid re-training the model
 @st.cache_resource
 def perform_random_forest(rf_data):
-    st.title("Random Forest Regression Model")
+    #st.title("Random Forest Regression Model")
+    st.markdown("<h1 style='color: cyan;'>Tree-Based & Ensemble Learning</h1>", unsafe_allow_html=True),
+    st.markdown("<h3 style='color: cyan;'>M5: Random Forest Regression Model</h3>", unsafe_allow_html=True),
     st.write("Random Forest is powerful for financial prediction models due to its ability to handle complex, non-linear data and prevent overfitting through ensemble learning. It can rank feature importance, making it useful for identifying key financial factors. Its robustness to missing data and non-linear relationships makes it versatile and accurate for tasks like stock price forecasting and risk assessment.")    
     
     # Ensure the index is a DateTime index
@@ -59,13 +61,17 @@ def perform_random_forest(rf_data):
     fig.add_trace(go.Scatter(x=y_test.index, y=y_test, mode='lines', name='Actual', line=dict(color='blue')))
     fig.add_trace(go.Scatter(x=y_test.index, y=y_pred, mode='lines', name='Predicted', line=dict(color='orange')))
     
-    fig.update_layout(title='Random Forest Regression - Actual vs Predicted',
+    st.markdown("`METRIC VALIDATION PLOT`", unsafe_allow_html=True)
+
+    fig.update_layout(title='Random Forest',
                     xaxis=dict(title="Date", rangeslider=dict(visible=True)), 
                     yaxis_title=target_column,
                     legend_title='Reference')
     
     # Display Plotly chart
     st.plotly_chart(fig)
+
+    st.markdown("`ERROR EVALUATION METRICS`", unsafe_allow_html=True)
 
     st.subheader("Evaluation Metrics")
     blue_text = "color: #3498DB;"

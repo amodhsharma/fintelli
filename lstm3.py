@@ -38,7 +38,9 @@ def create_lstm_model():
 
 @st.cache_data
 def train_lstm_model(train_data, model):
-    st.title("LSTM Model")
+    st.markdown("<h1 style='color: cyan;'>Deep Learning for Time Series</h1>", unsafe_allow_html=True),
+    st.markdown("<h3 style='color: cyan;'>M8: LSTM Model</h3>", unsafe_allow_html=True),
+    #st.title("LSTM Model"),
     st.write("LSTM is a type of Recurrent Neural Network (RNN) designed to capture long-term dependencies in sequential data. It is particularly useful for tasks like time series forecasting, natural language processing, and stock market prediction.")
 
     X_train, y_train = [], []
@@ -87,10 +89,12 @@ def plot_results(actual, predicted, lstm_data, target_column='Close'):
     # Add the predicted data
     fig.add_trace(go.Scatter(x=dates, y=predicted.flatten(), mode='lines', name='Predicted', line=dict(color='orange')))
     
-    fig.update_layout(title='Forecasting Model for LSTM',
-                      xaxis=dict(title="Date", rangeslider=dict(visible=True)),
-                      yaxis_title=target_column,
-                      legend_title='Reference')
+    st.markdown("`METRIC VALIDATION PLOT`", unsafe_allow_html=True)
+
+    fig.update_layout(title='LSTM',
+                    xaxis=dict(title="Date",rangeslider=dict(visible=True), showline=True, linecolor="white", linewidth=1),
+                    yaxis=dict(title=target_column, showline=True, linecolor="white", linewidth=1),
+                    legend_title='Reference')
     
     # Show the plot in Streamlit
     st.plotly_chart(fig)
@@ -131,6 +135,8 @@ def lstm(lstm_data):
     metrics = evaluate_metrics(actual, predicted)
     
     # Display the metrics
+    st.markdown("`ERROR EVALUATION METRICS`", unsafe_allow_html=True)
+
     st.subheader("Evaluation Metrics")
     blue_text = "color: #3498DB;"
     #st.markdown(f'<p style="{blue_text}"><b>MSE:</b> {metrics["MSE"]:.4f}</p>', unsafe_allow_html=True)

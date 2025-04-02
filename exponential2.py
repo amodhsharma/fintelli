@@ -30,9 +30,10 @@ def evaluate_forecast(actual, predicted):
 
     return metrics
 
-@st.cache_data
+@st.cache_resource
 def forecast_stock_prices_expsmoothing(data):
-    st.title('Exponential Smoothing Forecasting')
+    st.markdown("<h3 style='color: cyan;'>M2: Exponential Smoothing", unsafe_allow_html=True),
+    #st.title('Exponential Smoothing')
     st.write("This section provides a detailed analysis of stock price forecasting using Exponential Smoothing methods.")
     # Ensure the data index is in datetime format
     data.index = pd.to_datetime(data.index)
@@ -61,7 +62,13 @@ def forecast_stock_prices_expsmoothing(data):
     fig.add_trace(go.Scatter(x=test.index, y=forecast_double, mode='lines', name='Double Exp Smoothing', line=dict(color='purple', dash='dot')))
     fig.add_trace(go.Scatter(x=test.index, y=forecast_triple, mode='lines', name='Triple Exp Smoothing', line=dict(color='orange', dash='dot')))
 
-    fig.update_layout(title="Exponential Smoothening Graph",xaxis_title='Date', yaxis_title='Stock Price', xaxis=dict(rangeslider=dict(visible=True)))
+    st.markdown("`METRIC VALIDATION PLOT`", unsafe_allow_html=True)
+
+    fig.update_layout(title="Exponential Smoothening",xaxis_title='Date', yaxis_title='Stock Price',
+        xaxis=dict(rangeslider=dict(visible=True), showline=True, linecolor="white", linewidth=1),
+        yaxis=dict(showline=True, linecolor="white", linewidth=1),
+        legend_title='Reference',
+    )
 
     st.plotly_chart(fig)
 
@@ -71,6 +78,8 @@ def forecast_stock_prices_expsmoothing(data):
     metrics_triple = evaluate_forecast(test['Close'].values, forecast_triple)
 
     blue_text = "color: #3498DB;"
+
+    st.markdown("`ERROR EVALUATION METRICS`", unsafe_allow_html=True)
 
     # Display Evaluation Metrics for each model (without formatting)
     st.subheader("Evaluation Metrics for Single Exponential Smoothing")

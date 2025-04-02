@@ -3,7 +3,7 @@ import streamlit as st
 import plotly.graph_objects as go
 
 def plot_volatility(data, ticker):
-    st.title("Stock Price Volatility")
+    st.markdown("<h3 style='color: cyan;'>EDA: Stock Price Volatility</h3>", unsafe_allow_html=True),
     st.write("The degree of variation in a stock's price over time, often measured by standard deviation or the average absolute change in price. 30-day volatility tracks price fluctuations over the past month, while 90-day volatility captures price movements over a three-month period, helping you assess short-term versus medium-term risk.")
     
     # Ensure 'Date' is in datetime format
@@ -21,6 +21,8 @@ def plot_volatility(data, ticker):
     ])
     
     # Configure layout
+    st.markdown("`EXPLORATORY DATA ANALYSIS`", unsafe_allow_html=True)
+
     fig.update_layout(
         autosize=True,
         title="Stock Price Volatility",

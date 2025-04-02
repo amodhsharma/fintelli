@@ -49,7 +49,10 @@ def train_and_forecast_random_forest(rf_data):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=test.index, y=y_test.values, mode='lines', name='Actual Closing Price', line=dict(color='blue')))
     fig.add_trace(go.Scatter(x=test.index, y=y_pred, mode='lines', name='Predicted Closing Price', line=dict(color='red', dash='dash')))
-    fig.update_layout(title="Actual vs Predicted Closing Price", xaxis_title="Date", yaxis_title="Closing Price", template='plotly_dark')
+    fig.update_layout(title="Actual vs Predicted Closing Price", template='plotly_dark',
+        xaxis=dict(title="Date",rangeslider=dict(visible=True), showline=True, linecolor="white", linewidth=1),
+        yaxis=dict(title="Closing Price",showline=True, linecolor="white", linewidth=1)
+    )
     
     st.plotly_chart(fig)
     

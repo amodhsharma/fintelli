@@ -23,12 +23,14 @@ def updatefigure(fig):
     )
 
 def plot_history(data):
-    st.title("Time Series Plot")
+    st.markdown("<h3 style='color: cyan;'>EDA: Time Series Plot</h3>", unsafe_allow_html=True),
     st.write("Historical data plotting for opening and closing prices with opposed to Date, plotted below. Allows for an easier visualisation of the stock price movement over time.")
 
     fig = go.Figure(data=[
         go.Scatter(x=data['Date'], y=data['Open'], mode='lines', name="stock_open", line=dict(color="green")),
         go.Scatter(x=data['Date'], y=data['Close'], mode='lines', name="stock_close", line=dict(color="red"))
     ])
+    st.markdown("`EXPLORATORY DATA ANALYSIS`", unsafe_allow_html=True)
+
     updatefigure(fig)
     st.plotly_chart(fig)

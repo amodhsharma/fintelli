@@ -8,7 +8,9 @@ import streamlit as st
 
 @st.cache_data  # Cache the results of the training and evaluation process
 def train_and_evaluate_prophet(data):
-    st.title("Prophet Model")
+    #st.title("Prophet Model"),
+    st.markdown("<h3 style='color: cyan;'>M7: Prophet Model</h3>", unsafe_allow_html=True),
+    #title_font=dict(color="yellow"),
     st.write("Prophet is a forecasting tool created by Facebook, designed to handle time series data that may have missing values and seasonal effects. It is particularly effective for daily observations with strong seasonal patterns.")
     
     # Prepare data for Prophet (use index as 'ds' and 'Close' as 'y')
@@ -56,18 +58,24 @@ def train_and_evaluate_prophet(data):
     fig.add_trace(go.Scatter(x=test_data.index, y=y_actual, mode='lines', name='Actual', line=dict(color='blue')))
     fig.add_trace(go.Scatter(x=test_data.index, y=y_predicted, mode='lines', name='Predicted', line=dict(color='orange')))
     
+    st.markdown("`METRIC VALIDATION PLOT`", unsafe_allow_html=True)
+
     # Add a range slider to the x-axis
     fig.update_layout(
-        title="Forecasting Model for Prophet",
+        title="Prophet",
         xaxis_title="Date",
         yaxis_title="Close Price",
-        xaxis=dict(rangeslider=dict(visible=True)),
-        template="plotly_dark"
+        xaxis=dict(rangeslider=dict(visible=True), showline=True, linecolor="white", linewidth=1),
+        yaxis=dict(showline=True, linecolor="white", linewidth=1),
+        template="plotly_dark",
+        legend_title="Reference"
     )
     
     # Display the plot
     st.plotly_chart(fig)
     
+    st.markdown("`ERROR EVALUATION METRICS`", unsafe_allow_html=True)
+
     # Display evaluation metrics with custom color
     st.subheader("Evaluation Metrics")
     blue_text = "color: #3498DB;"

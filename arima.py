@@ -28,6 +28,8 @@ def evaluate_forecast(actual, predicted):
 
     blue_text = "color: #3498DB;"
 
+    st.markdown("`ERROR EVALUATION METRICS`", unsafe_allow_html=True)
+
     st.subheader("Evaluation Metrics")
     st.markdown(f"RMSE: The model's predicted prices deviate by around Rs.<span style='{blue_text}'>{metrics['RMSE']:.2f}</span> on average.", unsafe_allow_html=True)
     st.markdown(f"MAE: On average, the model's absolute error in predictions is around <span style='{blue_text}'>{metrics['MAE']:.2f}</span>.", unsafe_allow_html=True)
@@ -41,7 +43,9 @@ def forecast_stock_prices_arima(data, order=(6,1,0)):
     train_size = int(len(data) * 0.85)
     train, test = data[:train_size], data[train_size:]
     
-    st.title("ARIMA - Autoregressive Integrated Moving Average")
+    st.markdown("<h3 style='color: cyan;'>M3: ARIMA - Autoregressive Integrated Moving Average", unsafe_allow_html=True),
+    #st.title("ARIMA - Autoregressive Integrated Moving Average"),
+    #title_font=dict(color="yellow"),
     st.write("ARIMA is a popular statistical method for time series forecasting. It combines autoregression (AR), differencing (I), and moving average (MA) components.")
     st.write("ARIMA models are characterized by three parameters: p, d, and q.")
     st.write("p: The number of lag observations included in the model (lag order).")
@@ -70,8 +74,13 @@ def forecast_stock_prices_arima(data, order=(6,1,0)):
     fig.add_trace(go.Scatter(x=test.index, y=test['Close'], mode='lines', name='Test', line=dict(color='green')))
     fig.add_trace(go.Scatter(x=test.index, y=forecast, mode='lines', name='Forecast', line=dict(color='red', dash='dot')))
     
-    fig.update_layout(title="ARIMA Forcast", xaxis_title='Date', yaxis_title='Stock Price', xaxis=dict(rangeslider=dict(visible=True)))
-    
+    st.markdown("`METRIC VALIDATION PLOT`", unsafe_allow_html=True)
+
+    fig.update_layout(title="ARIMA", xaxis_title='Date',
+        xaxis=dict(title="Date",rangeslider=dict(visible=True), showline=True, linecolor="white", linewidth=1),
+        yaxis=dict(title='Stock Price', showline=True, linecolor="white", linewidth=1),
+        legend_title='Reference',
+    )
     #st.subheader('ARIMA Forecast')
     st.plotly_chart(fig)
     

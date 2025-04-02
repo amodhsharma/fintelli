@@ -54,7 +54,9 @@ def arima_model(data):
         title='ARIMA Model Prediction vs Actual',
         xaxis=dict(title='Time'),
         yaxis=dict(title='Value'),
-        showlegend=True
+        xaxis=dict(rangeslider=dict(visible=True), showline=True, linecolor="white", linewidth=1),
+        yaxis=dict(showline=True, linecolor="white", linewidth=1),
+        legend_title="Reference",
     )
 
     # Create the figure
