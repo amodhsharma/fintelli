@@ -2,12 +2,9 @@ import streamlit as st
 from datetime import date
 import seaborn as sns
 import matplotlib.pyplot as plt
-
-
-from prophet import Prophet
-from prophet.plot import plot_plotly
+#from prophet import Prophet
+#from prophet.plot import plot_plotly
 import plotly.graph_objects as go
-
 import pandas as pd
 
 st.set_page_config(page_title="Fintelli", page_icon="logo2.jpg")
@@ -168,7 +165,10 @@ from future_lstm import run_lstm_with_future_predictions
 run_lstm_with_future_predictions(data)
 st.divider()
 
-
-
-
-
+# ---------------------------------------------------------------
+# M8: Section change - below code shows buy/sell
+# ---------------------------------------------------------------
+# from model_runner import get_model_results
+# models, metrics_dict = get_model_results()
+# st.write("Model Buy/Sell Probabilities:", models)
+# st.write("Model Evaluation Metrics:", metrics_dict)

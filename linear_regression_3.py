@@ -6,6 +6,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
+lr_data = pd.read_csv("stock_data.csv")  # Read and store data
+lr_data.to_csv("stock_data_copy.csv")  # Save copy
+
 # Cache the evaluation metrics to avoid redundant calculations
 @st.cache_data
 def evaluate_metrics(y_true, y_pred):
@@ -15,15 +18,10 @@ def evaluate_metrics(y_true, y_pred):
     mape = np.mean(np.abs((y_true - y_pred) / y_true)) * 100
     r2 = r2_score(y_true, y_pred)
     
-    metrics = {
-        'MSE': mse,
-        'RMSE': rmse,
-        'MAE': mae,
-        'MAPE': mape,
-        'R^2': r2
-    }
-    
-    return metrics
+    # metrics = {'MSE': mse,'RMSE': rmse,'MAE': mae,'MAPE': mape,'R^2': r2}
+    # return metrics
+
+    return{'MSE': mse,'RMSE': rmse,'MAE': mae,'MAPE': mape,'R^2': r2}
 
 # Cache the data preprocessing to avoid redundant operations on data
 @st.cache_data
@@ -99,4 +97,13 @@ def perform_linear_regression(lr_data):
     st.markdown("`CLOSING PRICE PREDECTION FOR THE DAY`", unsafe_allow_html=True)
     st.metric(label="Linear Regression", value=f"₹{predicted_price:.2f}" if predicted_price else "N/A")
 
-    return metrics, predicted_price
+    # Determine Buy/Sell probability based on price trend
+    last_actual_price = y_test.iloc[-1]  # Last actual closing price
+    if predicted_price > last_actual_price:
+        buy_prob = 0.7  # Higher probability for buying
+        sell_prob = 0.3
+    else:
+        buy_prob = 0.3  # Higher probability for selling
+        sell_prob = 0.7
+
+    return metrics, predicted_price, {"buy": buy_prob, "sell": sell_prob}
