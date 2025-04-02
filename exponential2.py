@@ -100,4 +100,17 @@ def forecast_stock_prices_expsmoothing(data):
     st.markdown(f"MAPE: The model's predictions have an average error of <span style='{blue_text}'>{metrics_triple['MAPE']:.2f}%</span> relative to actual values.", unsafe_allow_html=True)
     st.markdown(f"R^2: The R² value of <span style='{blue_text}'>{metrics_triple['R^2']:.2f}</span> indicates that the model explains <span style='{blue_text}'>{metrics_triple['R^2'] * 100:.2f}%</span> of the variance in the target variable. Higher values (closer to 1) indicate better fit.", unsafe_allow_html=True)
 
+# Ensure the predicted values are retrieved safely
+    predicted_single = forecast_single.values[-1] if len(forecast_single) > 0 else None
+    predicted_double = forecast_double.values[-1] if len(forecast_double) > 0 else None
+    predicted_triple = forecast_triple.values[-1] if len(forecast_triple) > 0 else None
+
+    #st.subheader("Predicted Closing Prices for Today")
+    st.markdown("`CLOSING PRICE PREDECTION FOR THE DAY`", unsafe_allow_html=True)
+    st.metric(label="Single Exponential Smoothing", value=f"₹{predicted_single:.2f}" if predicted_single else "N/A")
+    st.metric(label="Double Exponential Smoothing", value=f"₹{predicted_double:.2f}" if predicted_double else "N/A")
+    st.metric(label="Triple Exponential Smoothing", value=f"₹{predicted_triple:.2f}" if predicted_triple else "N/A")
+
     return fig, metrics_single, metrics_double, metrics_triple
+
+    #return fig, metrics_single, metrics_double, metrics_triple

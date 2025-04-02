@@ -145,5 +145,8 @@ def lstm(lstm_data):
     st.markdown(f"MAPE: The model's predictions have an average error of <span style='{blue_text}'>{metrics['MAPE']:.2f}%</span> relative to actual values.", unsafe_allow_html=True)
     st.markdown(f"R^2: The <span style='{blue_text}'>R² value of {metrics['R^2']:.4f}</span> indicates that the model explains <span style='{blue_text}'>{metrics['R^2'] * 100:.2f}%</span> of the variance in the target variable. Higher values (closer to 1) indicate better fit.", unsafe_allow_html=True)
 
-    
+    predicted_price = predicted[-1, 0] if len(predicted) > 0 else None
+    st.markdown("`CLOSING PRICE PREDICTION FOR THE DAY`", unsafe_allow_html=True)
+    st.metric(label="LSTM", value=f"₹{predicted_price:.2f}" if predicted_price is not None else "N/A")
+
     return metrics
